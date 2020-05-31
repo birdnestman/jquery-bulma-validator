@@ -6,10 +6,16 @@
     $.fn.BulmaValidator = function(opts) {
         // default configuration
         var config = $.extend({}, {
+            classes: {
+                danger: "is-danger",
+                success: "is-success",
+                helptext: "help"
+            },
             settings: {
-                name: {
+                text: {
                     regex: "^[A-Za-z ,.'-]{3,35}$"
                 },
+
                 email: {
                     regex: "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
                 }
@@ -17,23 +23,23 @@
         }, opts);
 
         // main function
-        function Validate(e) {
-            console.log(e)
-            var fieldtype = e.data("validation");
+        function Validate($e) {
+            var fieldtype = $e.attr('type');
             var regex = new RegExp(config.settings[fieldtype].regex);
-            console.log(regex)
 
-            if(regex.test(e.val())){
-                e.removeClass("is-danger")
-                e.addClass("is-success")
-                e.parent().siblings(".help").hide()
-                RemoveIcon(e);
+            if(regex.test($e.val())){
+                $e.removeClass(config.classes.danger)
+                    .addClass(config.classes.success)
+                    .parent().siblings("." + config.classes.helptext).hide()
+                    
+                RemoveIcon($e);
 
             } else {
-                e.addClass("is-danger")
-                e.removeClass("is-success")
-                AddIcon(e)
-                e.parent().siblings(".help").show()
+                $e.removeClass(config.classes.success)
+                    .addClass(config.classes.danger)
+                    .parent().siblings("." + config.classes.helptext).show()
+
+                AddIcon($e)
             }
         }
 
