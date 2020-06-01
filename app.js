@@ -1,6 +1,7 @@
 // start
 $(function() {
-    $("input").BulmaValidator({
-        name: "test"
+    $("form").BulmaValidator({
+        name: "BulmaValidator"
     });
+
 });
